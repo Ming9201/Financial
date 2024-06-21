@@ -271,7 +271,19 @@ last_nan_index_RSI = KBar_df['RSI_long'][::-1].index[KBar_df['RSI_long'][::-1].a
 ###### (5) 將 Dataframe 欄位名稱轉換  ###### 
 KBar_df.columns = [ i[0].upper()+i[1:] for i in KBar_df.columns ]
 
+# 假设 KBar_df 是您的 DataFrame
 
+# 展示数据
+st.write(KBar_df)
+
+# 添加一个下载按钮
+csv_data = KBar_df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="下载 CSV 文件",
+    data=csv_data,
+    file_name='KBar_data.csv',
+    mime='text/csv'
+)
 ###### (6) 畫圖 ######
 st.subheader("畫圖")
 import plotly.graph_objects as go
