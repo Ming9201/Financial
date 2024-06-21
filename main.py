@@ -23,16 +23,16 @@ html_temp = """
 stc.html(html_temp)
 
 #df = pd.read_excel("kbars_台積電_1090101_1130620_2.xlsx")
-#df = pd.read_excel("kbars_2317_2020-01-01-2024-06-20.xlsx")
+#df = pd.read_excel("kbars_2330_2022-01-01-2022-11-18.xlsx")
 
 # ## 讀取 excel 檔
-# df_original = pd.read_excel("kbars_2317_2020-01-01-2024-06-20.xlsx")
+# df_original = pd.read_excel("kbars_2330_2022-01-01-2022-11-18.xlsx")
 
 # ## 保存为Pickle文件:
-# df_original.to_pickle('kbars_2317_2020-01-01-2024-06-20.xlsx')
+# df_original.to_pickle('kbars_2330_2022-01-01-2022-11-18.xlsx')
 
 ## 读取Pickle文件
-df_original = pd.read_pickle('kbars_2317_2020-01-01-2024-06-20.pkl')
+df_original = pd.read_pickle('kbars_2330_2022-01-01-2022-11-18.pkl')
 
 
 #df.columns  ## Index(['Unnamed: 0', 'time', 'open', 'low', 'high', 'close', 'volume','amount'], dtype='object')
@@ -47,14 +47,30 @@ df_original = df_original.drop('Unnamed: 0',axis=1)
 
 
 ##### 選擇資料區間
+data = {
+    'time': pd.date_range(start='2022-01-01', end='2022-12-31', freq='D'),
+    'value': range(365)
+}
+df_original = pd.DataFrame(data)
+
+# Streamlit 页面标题和日期选择
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
 start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
 end_date = st.text_input('選擇結束日期 (日期格式: 2022-11-18)', '2022-11-18')
-start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
-end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
-# 使用条件筛选选择时间区间的数据
-df = df_original[(df_original['time'] >= start_date) & (df_original['time'] <= end_date)]
 
+try:
+    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+
+    if start_date > end_date:
+        st.error('開始日期不能晚於結束日期')
+    else:
+        # 使用条件筛选选择时间区间的数据
+        df = df_original[(df_original['time'] >= start_date) & (df_original['time'] <= end_date)]
+        st.write(df)
+
+except ValueError:
+    st.error('請輸入正確的日期格式: YYYY-MM-DD')
 
 ###### (2) 轉化為字典 ######:
 KBar_dic = df.to_dict()
