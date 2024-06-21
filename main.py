@@ -16,7 +16,7 @@ import streamlit.components.v1 as stc
 ###### (1) 開始設定 ######
 html_temp = """
 		<div style="background-color:#3872fb;padding:10px;border-radius:10px">
-		<h1 style="color:black;text-align:center;">金融資料視覺化呈現</h1>
+		<h1 style="color:black;text-align:center;">台積電金融資料視覺化呈現</h1>
 		<h2 style="color:black;text-align:center;">Financial Dashboard </h2>
 		</div>
 		"""
@@ -47,30 +47,13 @@ df_original = df_original.drop('Unnamed: 0',axis=1)
 
 
 ##### 選擇資料區間
-data = {
-    'time': pd.date_range(start='2022-01-01', end='2022-12-31', freq='D'),
-    'value': range(365)
-}
-df_original = pd.DataFrame(data)
-
-# Streamlit 页面标题和日期选择
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
 start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
 end_date = st.text_input('選擇結束日期 (日期格式: 2022-11-18)', '2022-11-18')
-
-try:
-    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
-
-    if start_date > end_date:
-        st.error('開始日期不能晚於結束日期')
-    else:
-        # 使用条件筛选选择时间区间的数据
-        df = df_original[(df_original['time'] >= start_date) & (df_original['time'] <= end_date)]
-        st.write(df)
-
-except ValueError:
-    st.error('請輸入正確的日期格式: YYYY-MM-DD')
+start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
+end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
+# 使用条件筛选选择时间区间的数据
+df = df_original[(df_original['time'] >= start_date) & (df_original['time'] <= end_date)]
 
 ###### (2) 轉化為字典 ######:
 KBar_dic = df.to_dict()
