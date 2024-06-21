@@ -45,11 +45,6 @@ df_original = df_original.drop('Unnamed: 0',axis=1)
 #df.tail()
 #type(df['time'][0])
 ##### 選擇資料區間
-data = {
-    'time': pd.date_range(start='2022-01-01', end='2022-12-31', freq='D'),
-    'value': range(365)
-}
-df_original = pd.DataFrame(data)
 # Streamlit 頁面標題和日期選擇
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
 start_date = st.date_input('選擇開始日期', datetime.date(2022, 1, 3))
