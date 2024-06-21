@@ -271,12 +271,10 @@ last_nan_index_RSI = KBar_df['RSI_long'][::-1].index[KBar_df['RSI_long'][::-1].a
 ###### (5) 將 Dataframe 欄位名稱轉換  ###### 
 KBar_df.columns = [ i[0].upper()+i[1:] for i in KBar_df.columns ]
 
-# 假设 KBar_df 是您的 DataFrame
-
-# 展示数据
+# 展示數據
 st.write(KBar_df)
 
-# 添加一个下载按钮
+# 添加一個下載按鈕
 csv_data = KBar_df.to_csv(index=False).encode('utf-8')
 st.download_button(
     label="下载 CSV 文件",
@@ -284,13 +282,7 @@ st.download_button(
     file_name='KBar_data.csv',
     mime='text/csv'
 )
-excel_data = KBar_df.to_excel(index=False)
-st.download_button(
-    label="下载 Excel 文件",
-    data=excel_data,
-    file_name='KBar_data.xlsx',
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+st.markdown(f"[分享数据链接]({data_url})")
 ###### (6) 畫圖 ######
 st.subheader("畫圖")
 import plotly.graph_objects as go
