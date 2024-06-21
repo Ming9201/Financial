@@ -284,6 +284,13 @@ st.download_button(
     file_name='KBar_data.csv',
     mime='text/csv'
 )
+excel_data = KBar_df.to_excel(index=False)
+st.download_button(
+    label="下载 Excel 文件",
+    data=excel_data,
+    file_name='KBar_data.xlsx',
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+)
 ###### (6) 畫圖 ######
 st.subheader("畫圖")
 import plotly.graph_objects as go
