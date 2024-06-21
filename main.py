@@ -22,7 +22,7 @@ html_temp = """
 		"""
 stc.html(html_temp)
 
-#df = pd.read_excel("kbars_台積電_1090101_1130620_2.xlsx")
+#df = pd.read_excel("kbars_台積電_1100701_1100708_2.xlsx")
 #df = pd.read_excel("kbars_2330_2022-01-01-2022-11-18.xlsx")
 
 # ## 讀取 excel 檔
