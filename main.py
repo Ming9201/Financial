@@ -22,17 +22,17 @@ html_temp = """
 		"""
 stc.html(html_temp)
 
-#df = pd.read_excel("kbars_台積電_1100701_1100708_2.xlsx")
-#df = pd.read_excel("kbars_2330_2022-07-01-2022-07-31.xlsx")
+#df = pd.read_excel("kbars_台積電_1090101_1130620_2.xlsx")
+#df = pd.read_excel("kbars_2317_2020-01-01-2024-06-20.xlsx")
 
 # ## 讀取 excel 檔
-# df_original = pd.read_excel("kbars_2330_2022-01-01-2022-11-18.xlsx")
+# df_original = pd.read_excel("kbars_2317_2020-01-01-2024-06-20.xlsx")
 
 # ## 保存为Pickle文件:
-# df_original.to_pickle('kbars_2330_2022-01-01-2022-11-18.pkl')
+# df_original.to_pickle('kbars_2317_2020-01-01-2024-06-20.xlsx')
 
 ## 读取Pickle文件
-df_original = pd.read_pickle('kbars_2330_2022-01-01-2022-11-18.pkl')
+df_original = pd.read_pickle('kbars_2317_2020-01-01-2024-06-20.pkl')
 
 
 #df.columns  ## Index(['Unnamed: 0', 'time', 'open', 'low', 'high', 'close', 'volume','amount'], dtype='object')
