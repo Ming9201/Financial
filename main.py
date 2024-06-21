@@ -50,7 +50,6 @@ data = {
     'value': range(365)
 }
 df_original = pd.DataFrame(data)
-
 # Streamlit 頁面標題和日期選擇
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
 start_date = st.date_input('選擇開始日期', datetime.date(2022, 1, 3))
@@ -62,6 +61,22 @@ if start_date > end_date:
 else:
     df = df_original[(df_original['time'] >= pd.to_datetime(start_date)) & (df_original['time'] <= pd.to_datetime(end_date))]
     st.write(df)
+
+# 示例的KBar_dic字典
+KBar_dic = {
+    'open': {'2022-01-01': 100, '2022-01-02': 101},
+    'close': {'2022-01-01': 102, '2022-01-02': 103}
+}
+
+# 確認KBar_dic中存在'open'鍵
+if 'KBar_dic' in locals() or 'KBar_dic' in globals():
+    if 'open' in KBar_dic:
+        KBar_open_list = list(KBar_dic['open'].values())
+        st.write("KBar_open_list:", KBar_open_list)
+    else:
+        st.error("'KBar_dic' 不包含 'open' 鍵")
+else:
+    st.error("'KBar_dic' 未定義")
 
 
 ###### (2) 轉化為字典 ######:
