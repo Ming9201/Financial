@@ -226,7 +226,23 @@ fig.layout.yaxis2.showgrid=True
 
 st.plotly_chart(fig, use_container_width=True)
 
+# 在這裡確保KBar_df存在並且包含所需的數據
+if 'KBar_df' not in locals() or 'KBar_df' not in globals():
+    st.error('無法找到或加載KBar數據框')
+else:
+    # 添加交易信號列
+    KBar_df['Signal'] = 0  # 初始化交易信號列，0表示無信號
 
+    # 根據交易策略生成交易信號，這裡可以根據實際需求添加具體的交易規則
+    KBar_df.loc[(KBar_df['MA_short'] > KBar_df['MA_long']), 'Signal'] = 1
+    KBar_df.loc[(KBar_df['MA_short'] < KBar_df['MA_long']), 'Signal'] = -1
+
+    # 在這裡可以繼續添加其他的交易信號生成邏輯
+
+    # 繪製包含交易信號的圖表，這裡省略實際的繪圖代碼
+
+    # 最後展示圖表到Streamlit應用中
+    st.write(KBar_df)
 
 ###### (4) 計算各種技術指標 ######
 ##### 將K線 Dictionary 轉換成 Dataframe
