@@ -282,7 +282,7 @@ st.download_button(
     file_name='KBar_data.csv',
     mime='text/csv'
 )
-st.markdown(f"[分享数据链接]({data_url})")
+
 ###### (6) 畫圖 ######
 st.subheader("畫圖")
 import plotly.graph_objects as go
