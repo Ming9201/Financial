@@ -44,11 +44,24 @@ df_original = df_original.drop('Unnamed: 0',axis=1)
 #df.head()
 #df.tail()
 #type(df['time'][0])
+# 示例數據，您可以替換為從Excel或其他來源加載的數據
+data = {
+    'time': pd.date_range(start='2022-01-01', end='2022-12-31', freq='D'),
+    'value': range(365)
+}
+df_original = pd.DataFrame(data)
 
+# Streamlit 頁面標題和日期選擇
+st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
+start_date = st.date_input('選擇開始日期', datetime.date(2022, 1, 3))
+end_date = st.date_input('選擇結束日期', datetime.date(2022, 11, 18))
 
-
-
-
+# 使用條件篩選選擇時間區間的數據
+if start_date > end_date:
+    st.error('開始日期不能晚於結束日期')
+else:
+    df = df_original[(df_original['time'] >= pd.to_datetime(start_date)) & (df_original['time'] <= pd.to_datetime(end_date))]
+    st.write(df)
 
 ##### 選擇資料區間
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2022-11-18")
