@@ -199,50 +199,6 @@ KBar_dic['volume'] =  KBar.TAKBar['volume']
 # KBar_dic['volume'].shape  ## (2814,)
 #KBar_dic['time'][536]
 ######  改變 KBar 時間長度 (以上)  ########
-# 添加交易信號生成的代碼段
-
-# 根據移動平均線和RSI生成交易信號
-KBar_df['Signal'] = 0  # 初始化交易信號列，0表示無信號
-
-# 生成買入信號
-KBar_df.loc[(KBar_df['MA_short'] > KBar_df['MA_long']) & (KBar_df['RSI_short'] > KBar_df['RSI_long']), 'Signal'] = 1
-
-# 生成賣出信號
-KBar_df.loc[(KBar_df['MA_short'] < KBar_df['MA_long']) & (KBar_df['RSI_short'] < KBar_df['RSI_long']), 'Signal'] = -1
-
-# 在圖表中標記買入和賣出信號
-fig = make_subplots(specs=[[{"secondary_y": True}]])
-fig.add_trace(go.Candlestick(x=KBar_df['Time'], open=KBar_df['Open'], high=KBar_df['High'], low=KBar_df['Low'], close=KBar_df['Close'], name='K線'), secondary_y=True)
-
-# 標記買入信號
-buy_signals = KBar_df[KBar_df['Signal'] == 1]
-fig.add_trace(go.Scatter(x=buy_signals['Time'], y=buy_signals['Low'] - 10, mode='markers', marker=dict(symbol='triangle-up', color='green', size=10), name='買入信號'), secondary_y=False)
-
-# 標記賣出信號
-sell_signals = KBar_df[KBar_df['Signal'] == -1]
-fig.add_trace(go.Scatter(x=sell_signals['Time'], y=sell_signals['High'] + 10, mode='markers', marker=dict(symbol='triangle-down', color='red', size=10), name='賣出信號'), secondary_y=False)
-
-fig.layout.yaxis2.showgrid=True
-
-st.plotly_chart(fig, use_container_width=True)
-
-# 在這裡確保KBar_df存在並且包含所需的數據
-if 'KBar_df' not in locals() or 'KBar_df' not in globals():
-    st.error('無法找到或加載KBar數據框')
-else:
-    # 添加交易信號列
-    KBar_df['Signal'] = 0  # 初始化交易信號列，0表示無信號
-
-    # 根據交易策略生成交易信號，這裡可以根據實際需求添加具體的交易規則
-    KBar_df.loc[(KBar_df['MA_short'] > KBar_df['MA_long']), 'Signal'] = 1
-    KBar_df.loc[(KBar_df['MA_short'] < KBar_df['MA_long']), 'Signal'] = -1
-
-    # 在這裡可以繼續添加其他的交易信號生成邏輯
-
-    # 繪製包含交易信號的圖表，這裡省略實際的繪圖代碼
-
-    # 最後展示圖表到Streamlit應用中
-    st.write(KBar_df)
 
 ###### (4) 計算各種技術指標 ######
 ##### 將K線 Dictionary 轉換成 Dataframe
