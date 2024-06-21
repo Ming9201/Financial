@@ -203,7 +203,34 @@ KBar_dic['volume'] =  KBar.TAKBar['volume']
 ###### (4) 計算各種技術指標 ######
 ##### 將K線 Dictionary 轉換成 Dataframe
 KBar_df = pd.DataFrame(KBar_dic)
+# 創建一個 Plotly 圖表對象
+fig = go.Figure()
 
+# 添加 K 線圖
+fig.add_trace(go.Candlestick(x=KBar_df['Time'],
+                             open=KBar_df['Open'],
+                             high=KBar_df['High'],
+                             low=KBar_df['Low'],
+                             close=KBar_df['Close'],
+                             name='K線圖'))
+
+# 添加交易信號的標記
+buy_signals = KBar_df[KBar_df['Signal'] == 1]
+sell_signals = KBar_df[KBar_df['Signal'] == -1]
+
+fig.add_trace(go.Scatter(x=buy_signals['Time'], y=buy_signals['High'], 
+                         mode='markers', name='買入信號', marker_symbol='triangle-up', marker=dict(size=10, color='green')))
+fig.add_trace(go.Scatter(x=sell_signals['Time'], y=sell_signals['Low'], 
+                         mode='markers', name='賣出信號', marker_symbol='triangle-down', marker=dict(size=10, color='red')))
+
+# 設置圖表布局和樣式
+fig.update_layout(title='K線圖與交易信號',
+                  xaxis_title='時間',
+                  yaxis_title='價格',
+                  xaxis_rangeslider_visible=False)
+
+# 顯示圖表
+st.plotly_chart(fig, use_container_width=True)
 
 #####  (i) 移動平均線策略   #####
 ####  設定長短移動平均線的 K棒 長度:
